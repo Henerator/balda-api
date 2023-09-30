@@ -33,3 +33,13 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# file db
+/file-db/
+
+# mongo
+/mongo-data/
+
+# env
+.env
+
