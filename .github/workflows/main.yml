@@ -2,8 +2,8 @@ name: Publish balda api docker image
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*'
 
 jobs:
   build:
