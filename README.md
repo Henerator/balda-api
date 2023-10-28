@@ -79,3 +79,12 @@ services:
 
 - `mongosh --port 27017 --authenticationDatabase 'admin' -u 'admin' -p`
 - `mongosh --port 27017 --authenticationDatabase 'balda' -u 'balda' -p`
+
+## Authentication
+
+### Generate password hash
+
+```typescript
+const salt = await genSalt(10);
+const passwordHash = await hash(dto.password, salt);
+```
