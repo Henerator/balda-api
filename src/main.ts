@@ -1,13 +1,19 @@
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  // TODO: add environment path for client
-  app.enableCors({
-    origin: 'http://localhost:4200',
-  });
-  await app.setGlobalPrefix('api').listen(3000);
+
+  const configService = app.get(ConfigService);
+  const apiPort = configService.get<number>('API_PORT');
+  // TODO: move to custom config service
+  const frontAppOrigins = configService
+    .get<string>('ALLOWED_ORIGINS')
+    .split(';');
+
+  app.enableCors({ origin: frontAppOrigins });
+  await app.setGlobalPrefix('api').listen(apiPort);
 }
 bootstrap();

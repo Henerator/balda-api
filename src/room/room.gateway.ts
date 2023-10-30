@@ -19,7 +19,7 @@ import { RoomService } from './room.service';
 @WebSocketGateway({
   namespace: 'room',
   cors: {
-    origin: 'http://localhost:4200', // TODO: add environment path for client
+    origin: ['http://roman-balda.ru', 'https://roman-balda.ru'],
   },
 })
 export class RoomGateway implements OnGatewayDisconnect {
