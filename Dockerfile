@@ -1,4 +1,4 @@
-FROM node:21-alpine
+FROM node:20-alpine AS build
 
 LABEL org.opencontainers.image.source=https://github.com/Henerator/balda-api
 LABEL org.opencontainers.image.description="balda-api"
@@ -7,19 +7,21 @@ LABEL org.opencontainers.image.licenses=MIT
 WORKDIR /app
 
 # add package json only. to cache the layer
-ADD package.json package.json
+COPY package*.json ./
 
 # install dependencies
-RUN npm install
+RUN npm ci
 
-# add all other files
-ADD . .
+# copy all other files
+COPY . .
 
 # build the app
-RUN npm run build
+RUN npm run build && npm prune --production
 
-# clean dev dependencies
-RUN npm prune --production
+FROM node:20-alpine
+
+COPY --from=build /app/dist /app/dist
+COPY --from=build /app/node_modules /app/node_modules
 
 # run
 CMD ["node", "./dist/main.js"]
