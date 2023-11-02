@@ -20,8 +20,10 @@ RUN npm run build && npm prune --production
 
 FROM node:20-alpine
 
-COPY --from=build /app/dist /app/dist
-COPY --from=build /app/node_modules /app/node_modules
+WORKDIR /app
+
+COPY --from=build /app/dist/ /app/dist/
+COPY --from=build /app/node_modules/ /app/node_modules/
 
 # run
-CMD ["node", "./dist/main.js"]
+CMD ["node", "dist/main.js"]
