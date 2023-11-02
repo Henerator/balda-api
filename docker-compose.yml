@@ -3,6 +3,7 @@ services:
   mongo:
     image: mongo
     container_name: balda-api-mongo
+    hostname: mongo
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INIT_USER}
@@ -17,8 +18,9 @@ services:
       - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
     command: --wiredTigerCacheSizeGB 1.5
   baldaapi:
-    image: balda-api:latest
+    image: ghcr.io/henerator/balda-api/balda-api:latest
     container_name: balda-api
+    hostname: balda-api
     restart: always
     ports:
       - 3000:3000
