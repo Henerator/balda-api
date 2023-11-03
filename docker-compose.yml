@@ -26,3 +26,5 @@ services:
       - 3000:3000
     volumes:
       - ./.env:/app/.env
+      - /etc/letsencrypt/live/roman-balda.ru:/etc/ssl-sertificates:ro
+      - /etc/letsencrypt/archive:/archive
