@@ -32,6 +32,10 @@ export class FileRoomDataService
     return this.updateRoom(room);
   }
 
+  async deleteOlderThan(): Promise<mongodb.DeleteResult> {
+    throw new Error('Method not implemented.');
+  }
+
   protected createRoom(dto: CreateRoomDto): Room {
     const room = super.createRoom(dto);
     room._id = Math.ceil(Math.random() * 100).toString();

@@ -119,6 +119,10 @@ export class RoomService {
     return this.service.update(room);
   }
 
+  async deleteOlderThan(date: Date): Promise<mongodb.DeleteResult> {
+    return this.service.deleteOlderThan(date);
+  }
+
   private createPlayer(name: string): Player {
     const player = new Player();
     player.name = name;

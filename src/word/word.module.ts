@@ -21,10 +21,6 @@ import { WordService } from './word.service';
       provide: WordDataService,
       useClass: MongoWordDataService,
     },
-    // {
-    //   provide: WordDataService,
-    //   useClass: FileWordDataService,
-    // },
   ],
   exports: [WordService],
   controllers: [WordController],

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { DateTimeModule } from 'src/date-time/date-time.module';
 import { WordModule } from 'src/word/word.module';
 import { MongoRoomDataService } from './data/mongo-data/mongo-room-data.service';
 import { RoomDataService } from './data/room-data.service';
@@ -16,6 +17,8 @@ import { RoomService } from './room.service';
         schema: RoomSchema,
       },
     ]),
+
+    DateTimeModule,
     WordModule,
   ],
   providers: [
@@ -25,10 +28,6 @@ import { RoomService } from './room.service';
       provide: RoomDataService,
       useClass: MongoRoomDataService,
     },
-    // {
-    //   provide: RoomDataService,
-    //   useClass: FileRoomDataService,
-    // },
   ],
   controllers: [RoomController],
 })

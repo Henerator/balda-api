@@ -2,7 +2,6 @@ import { Logger } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
-  OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -22,7 +21,7 @@ import { RoomService } from './room.service';
     origin: ['http://roman-balda.ru', 'https://roman-balda.ru'],
   },
 })
-export class RoomGateway implements OnGatewayDisconnect {
+export class RoomGateway {
   @WebSocketServer()
   server: Server = new Server();
 
@@ -69,10 +68,6 @@ export class RoomGateway implements OnGatewayDisconnect {
 
     const roomId = String(room._id);
     this.server.to(roomId).emit(RoomMessage.room, room);
-  }
-
-  handleDisconnect(socket: Socket) {
-    this.logger.log('Disconnected', socket.id);
   }
 
   private validateError(error: unknown): RoomException {

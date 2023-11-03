@@ -88,3 +88,9 @@ services:
 const salt = await genSalt(10);
 const passwordHash = await hash(dto.password, salt);
 ```
+
+### Add user to db
+
+```sh
+db.users.insertOne({ "name": "balda", "passwordHash": "hash" });
+```

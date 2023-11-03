@@ -27,4 +27,8 @@ export class MongoRoomDataService
   async update(room: Room): Promise<Room | null> {
     return this.model.findByIdAndUpdate(room._id, room, { new: true });
   }
+
+  async deleteOlderThan(date: Date): Promise<mongodb.DeleteResult> {
+    return this.model.deleteMany({ updatedAt: { $lt: date } });
+  }
 }
