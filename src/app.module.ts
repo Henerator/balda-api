@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { mongoConfigFactory } from './configs/mongo.config';
 import { DateTimeModule } from './date-time/date-time.module';
 import { RoomModule } from './room/room.module';
+import { SitemapModule } from './sitemap/sitemap.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -24,6 +25,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     RoomModule,
     DateTimeModule,
+    SitemapModule,
   ],
   controllers: [AppController],
   providers: [AppService],
