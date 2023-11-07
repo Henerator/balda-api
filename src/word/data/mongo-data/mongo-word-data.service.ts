@@ -42,6 +42,6 @@ export class MongoWordDataService implements WordDataService {
   }
 
   async createMany(dto: CreateWordDto[]): Promise<Word[]> {
-    return this.model.insertMany(dto);
+    return this.model.insertMany(dto, { ordered: false });
   }
 }
