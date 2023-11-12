@@ -205,7 +205,10 @@ export class RoomService {
   }
 
   private isWordAlreadyUsed(room: Room, word: string): boolean {
-    const usedWords = room.players.map((player) => player.words).flat();
+    const usedWords = [
+      ...room.players.map((player) => player.words).flat(),
+      room.initialWord,
+    ];
     return usedWords.some((usedWord) => usedWord === word);
   }
 
@@ -227,6 +230,7 @@ export class RoomService {
   private applyStartWord(room: Room, word: string): Room {
     const y = Math.floor((room.size - 1) / 2);
     word.split('').forEach((char, x) => (room.matrix[y][x] = char));
+    room.initialWord = word;
     return room;
   }
 

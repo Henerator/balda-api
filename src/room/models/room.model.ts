@@ -24,6 +24,9 @@ export class Room {
 
   @Prop([[String]])
   matrix: string[][];
+
+  @Prop()
+  initialWord: string;
 }
 
 export type RoomDocument = HydratedDocument<Room>;
