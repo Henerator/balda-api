@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { LetterSequenceRule } from './letter-sequence-rule.enum';
 import { Player, PlayerSchema } from './player.model';
 import { RoomState } from './room-state.enum';
 
@@ -27,6 +28,9 @@ export class Room {
 
   @Prop()
   initialWord: string;
+
+  @Prop({ type: [{ enum: LetterSequenceRule, type: String }] })
+  letterSequenceRules: LetterSequenceRule[];
 }
 
 export type RoomDocument = HydratedDocument<Room>;

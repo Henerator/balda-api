@@ -19,9 +19,12 @@ import { RoomNotFoundException } from './exceptions/room-not-found.exception';
 import { UnfilledWordSequenceException } from './exceptions/unfilled-word-sequence.exception';
 import { WordAlreadyUsedException } from './exceptions/word-already-used.exception';
 import { WordNotFoundException } from './exceptions/word-not-found.exception';
+import { LetterSequenceRule } from './models/letter-sequence-rule.enum';
 import { Player } from './models/player.model';
 import { RoomState } from './models/room-state.enum';
 import { Room } from './models/room.model';
+import { SequenceValidator } from './sequence-validators/sequence-validator.type';
+import { sequenceValidatorsMap } from './sequence-validators/sequence-validators.map';
 
 @Injectable()
 export class RoomService {
@@ -85,7 +88,7 @@ export class RoomService {
       throw new PositionFilledException();
     }
 
-    if (!this.isSequenceValid(dto.word)) {
+    if (!this.isSequenceValid(room.letterSequenceRules, dto.word)) {
       throw new InvalidWordSequenceException();
     }
 
@@ -175,14 +178,19 @@ export class RoomService {
     return !room.matrix[position.y][position.x];
   }
 
-  private isSequenceValid(positions: PositionDto[]): boolean {
+  private isSequenceValid(
+    roomRules: LetterSequenceRule[],
+    positions: PositionDto[],
+  ): boolean {
+    const validators = this.getSequenceValidators(roomRules);
+
     for (let i = 1; i < positions.length; i++) {
       const previous = positions[i - 1];
       const current = positions[i];
 
-      const isCurrentValid =
-        (previous.x === current.x && Math.abs(previous.y - current.y) === 1) ||
-        (previous.y === current.y && Math.abs(previous.x - current.x) === 1);
+      const isCurrentValid = validators.some((validator) =>
+        validator(previous, current),
+      );
 
       if (!isCurrentValid) return false;
     }
@@ -238,6 +246,16 @@ export class RoomService {
     return dto.word
       .map((position) => room.matrix[position.y][position.x])
       .join('');
+  }
+
+  private getSequenceValidators(
+    roomRules: LetterSequenceRule[],
+  ): SequenceValidator[] {
+    return [
+      LetterSequenceRule.horizontal,
+      LetterSequenceRule.vertical,
+      ...roomRules,
+    ].map((rule) => sequenceValidatorsMap[rule]);
   }
 
   private addCurrentPlayerWord(room: Room, word: string): Room {
