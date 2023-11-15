@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Types } from 'mongoose';
 import { FindRandomWordDto } from 'src/word/dto/find-random-word.dto';
 import { FindWordDto } from 'src/word/dto/find-word.dto';
 import { WordService } from 'src/word/word.service';
@@ -38,6 +39,10 @@ export class RoomService {
   }
 
   async joinToRoom(dto: JoinRoomMessageDto): Promise<Room | null> {
+    if (!Types.ObjectId.isValid(dto.roomId)) {
+      throw new RoomNotFoundException(dto.roomId);
+    }
+
     let room = await this.service.findById(dto.roomId);
 
     if (!room) {
