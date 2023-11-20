@@ -27,6 +27,10 @@ export class BaseRoomDataService {
       rules.push(LetterSequenceRule.diagonal);
     }
 
+    if (dto.allowDuplicateLetter) {
+      rules.push(LetterSequenceRule.duplicate);
+    }
+
     return rules;
   }
 }

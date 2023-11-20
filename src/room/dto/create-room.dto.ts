@@ -9,4 +9,8 @@ export class CreateRoomDto {
   @IsOptional()
   @IsBoolean()
   allowDiagonalLetter?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  allowDuplicateLetter?: boolean;
 }
