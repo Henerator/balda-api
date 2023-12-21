@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpException,
@@ -16,9 +17,14 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CreateWordDto } from './dto/create-word.dto';
+import { DeleteWordDto } from './dto/delete-word.dto';
 import { FindRandomWordDto } from './dto/find-random-word.dto';
 import { FindWordDto } from './dto/find-word.dto';
-import { INVALID_UPLOADED_FILE, WORD_EXIST } from './exceptions/errors.const';
+import {
+  INVALID_UPLOADED_FILE,
+  WORD_EXIST,
+  WORD_IS_NOT_EXIST,
+} from './exceptions/errors.const';
 import { UploadWords } from './interfaces/upload-words.interface';
 import { WordService } from './word.service';
 
@@ -60,6 +66,20 @@ export class WordController {
     }
 
     return this.service.create(dto);
+  }
+
+  @Delete()
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  async delete(@Body() dto: DeleteWordDto) {
+    const findWordDto = new FindWordDto(dto.value);
+    const word = await this.service.find(findWordDto);
+
+    if (!word) {
+      throw new HttpException(WORD_IS_NOT_EXIST, HttpStatus.NOT_FOUND);
+    }
+
+    return this.service.delete(dto);
   }
 
   @Post('upload')

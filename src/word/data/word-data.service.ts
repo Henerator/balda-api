@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWordDto } from '../dto/create-word.dto';
+import { DeleteWordDto } from '../dto/delete-word.dto';
 import { FindRandomWordDto } from '../dto/find-random-word.dto';
 import { FindWordDto } from '../dto/find-word.dto';
 import { Word } from '../models/word.model';
@@ -11,4 +12,5 @@ export abstract class WordDataService {
   abstract findRandom(dto: FindRandomWordDto): Promise<Word>;
   abstract create(dto: CreateWordDto): Promise<Word | null>;
   abstract createMany(dto: CreateWordDto[]): Promise<Word[]>;
+  abstract delete(dto: DeleteWordDto): Promise<Word | null>;
 }

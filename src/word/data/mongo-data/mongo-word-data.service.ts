@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateWordDto } from 'src/word/dto/create-word.dto';
+import { DeleteWordDto } from 'src/word/dto/delete-word.dto';
 import { FindRandomWordDto } from 'src/word/dto/find-random-word.dto';
 import { FindWordDto } from 'src/word/dto/find-word.dto';
 import { Word, WordDocument } from 'src/word/models/word.model';
@@ -43,5 +44,9 @@ export class MongoWordDataService implements WordDataService {
 
   async createMany(dto: CreateWordDto[]): Promise<Word[]> {
     return this.model.insertMany(dto, { ordered: false });
+  }
+
+  async delete(dto: DeleteWordDto): Promise<Word | null> {
+    return this.model.findOneAndDelete({ value: dto.value }).exec();
   }
 }

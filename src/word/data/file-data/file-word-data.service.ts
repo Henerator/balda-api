@@ -39,6 +39,10 @@ export class FileWordDataService implements WordDataService {
     throw new Error('Not implemented');
   }
 
+  async delete(): Promise<Word | null> {
+    throw new Error('Not implemented');
+  }
+
   private async readWords(): Promise<string[]> {
     return readJson(this.filePath);
   }
