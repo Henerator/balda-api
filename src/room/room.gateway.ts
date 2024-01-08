@@ -24,6 +24,7 @@ import { RoomService } from './room.service';
 export class RoomGateway {
   @WebSocketServer()
   server: Server = new Server({
+    transports: ['websocket'],
     connectionStateRecovery: {
       maxDisconnectionDuration: duration.tenMinutes,
     },
