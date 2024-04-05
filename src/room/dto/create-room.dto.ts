@@ -2,8 +2,8 @@ import { IsBoolean, IsNumber, IsOptional, Max, Min } from 'class-validator';
 
 export class CreateRoomDto {
   @IsNumber()
-  @Min(5)
-  @Max(7)
+  @Min(3)
+  @Max(10)
   size: number;
 
   @IsOptional()
