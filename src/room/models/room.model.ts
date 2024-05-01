@@ -14,6 +14,9 @@ export class Room {
   @Prop()
   capacity: number;
 
+  @Prop()
+  repeatLimit: number;
+
   @Prop({ enum: RoomState, type: String })
   state: RoomState;
 

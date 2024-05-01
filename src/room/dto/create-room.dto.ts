@@ -6,6 +6,9 @@ export class CreateRoomDto {
   @Max(10)
   size: number;
 
+  @IsNumber()
+  repeatLimit: number;
+
   @IsOptional()
   @IsBoolean()
   allowDiagonalLetter?: boolean;

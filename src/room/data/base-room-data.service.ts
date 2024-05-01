@@ -3,11 +3,14 @@ import { LetterSequenceRule } from '../models/letter-sequence-rule.enum';
 import { RoomState } from '../models/room-state.enum';
 import { Room } from '../models/room.model';
 
+const repeatInfinity = 100;
+
 export class BaseRoomDataService {
   protected createRoom(dto: CreateRoomDto): Room {
     const room = new Room();
     room.size = dto.size;
     room.capacity = 2;
+    room.repeatLimit = dto.repeatLimit ?? repeatInfinity;
     room.state = RoomState.waitingPlayers;
     room.currentPlayerName = null;
     room.players = [];
